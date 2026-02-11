@@ -149,7 +149,7 @@ addScoreBtn.addEventListener("click", function () {
 //   }
 // }
 
-// обработчик кнопки
+// обработчик кнопки Добавить среднюю оценку
 // topBtn.addEventListener("click", () => {
 //   const minAvg = Number(minAverage.value);
 //   renderTopStudents(topStudents);
