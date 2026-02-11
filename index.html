@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students</title>
+  </head>
+  <body>
+      <h2>Список учеников</h2>
+      <table id="table"></table>
+
+      <div id="result">
+        Средняя оценка всех учеников: <span id="average">0</span>
+      </div>
+
+      <div id="parent">
+        <div id="form">
+          <input id="name" placeholder="Имя ученика" />
+          <input id="addBtn" type="button" value="Добавить ученика" />
+        </div>
+  
+        <div id="scoreForm">
+          <input id="studentId" type="number" placeholder="ID ученика" />
+          <input id="newScore" type="number" placeholder="Оценка" />
+          <input id="addScoreBtn" type="button" value="Добавить оценку" />
+        </div>
+
+
+
+      <h2>Лучшие ученики</h2>
+      <table id="topStudentsTable"></table>
+    </div>
+    <div id="filterForm">
+      <input
+        id="minAverage"
+        type="number"
+        placeholder="Мин. средний балл"
+      />
+      <button id="top">Показать лучших учеников</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
