@@ -18,7 +18,7 @@ const student = document.querySelector("#studentId");
 const newScore = document.querySelector("#newScore");
 const addScoreBtn = document.querySelector("#addScoreBtn");
 const minAverage = document.querySelector("#minAverage");
-const topBtn = document.querySelector("#topBtn");
+const topBtn = document.querySelector("#top");
 const topStudentsTable = document.querySelector("#topStudentsTable");
 
 let students = [
@@ -82,14 +82,22 @@ function addScore(students, id, score) {
   for (let el of students) {
     if (el.id == id) {
       el.scores.push(score);
-      break;
+      break
     }
   }
 }
 
 // функция получения списка студентов с средним баллом выше minAverag
-// function getTopStudents(students, minAverage) {
-// }
+function getTopStudents(students, minAverage) {
+  let result = [];
+  for (let el of students) {
+    let avg = Number(getAverageScore(students, el.id));
+    if (avg >= minAverage) {
+      result.push(el);
+    }
+  }
+  return result;
+}
 
 // функция добавления таблицы со списком студентов
 const renderList = () => {
@@ -116,7 +124,8 @@ renderList();
 
 // обработчик кнопки "Добавить студента"
 addBtn.addEventListener("click", function () {
-  if (name.value.length > 0) {
+  let checkOnlyLetters = /^[a-zA-Zа-яА-Я ]+$/;
+  if (checkOnlyLetters.test(name.value)) {
     const newItem = {
       id: students.length + 1,
       name: name.value,
@@ -124,7 +133,7 @@ addBtn.addEventListener("click", function () {
     };
     addStudent(students, newItem);
     renderList();
-  }
+  } else alert("В имени должны быть только буквы");
 });
 
 // обработчик кнопки "Добавить оценку"
@@ -136,21 +145,29 @@ addScoreBtn.addEventListener("click", function () {
 });
 
 // функция для отображения лучших студентов в таблице
-// function renderTopStudents(students) {
-//   topStudentsTable.innerHTML = `
-//     <tr>
-//       <th>№</th>
-//       <th>Имя</th>
-//       <th>Средняя оценка</th>
-//     </tr>
-//   `
-//     `;
-//     topStudentsTable.insertAdjacentHTML("beforeend", html);
-//   }
-// }
+function renderTopStudents(students) {
+  topStudentsTable.innerHTML = `
+    <tr>
+      <th>№</th>
+      <th>Имя</th>
+      <th>Средняя оценка</th>
+    </tr>
+  `;
+  for (let el of students) {
+    const html = `
+      <tr>
+        <td>${el.id}</td>
+        <td>${el.name}</td>
+        <td>${getAverageScore(students, el.id)}</td>
+      </tr>
+    `;
+    topStudentsTable.insertAdjacentHTML("beforeend", html);
+  }
+}
 
-// обработчик кнопки Добавить среднюю оценку
-// topBtn.addEventListener("click", () => {
-//   const minAvg = Number(minAverage.value);
-//   renderTopStudents(topStudents);
-// });
+//обработчик кнопки Добавить среднюю оценку
+topBtn.addEventListener("click", function () {
+  const minAvg = Number(minAverage.value);
+  const topStudents = getTopStudents(students, minAvg);
+  renderTopStudents(topStudents);
+});
