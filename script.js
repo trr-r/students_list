@@ -14,7 +14,7 @@ const average = document.querySelector("#average");
 const addBtn = document.querySelector("#addBtn");
 const name = document.querySelector("#name");
 const score = document.querySelector("#score");
-const student = document.querySelector("#studentId");
+const selectStudent = document.querySelector("#studentId");
 const newScore = document.querySelector("#newScore");
 const addScoreBtn = document.querySelector("#addScoreBtn");
 const minAverage = document.querySelector("#minAverage");
@@ -82,7 +82,7 @@ function addScore(students, id, score) {
   for (let el of students) {
     if (el.id == id) {
       el.scores.push(score);
-      break
+      break;
     }
   }
 }
@@ -101,6 +101,7 @@ function getTopStudents(students, minAverage) {
 
 // функция добавления таблицы со списком студентов
 const renderList = () => {
+  selectStudent.innerHTML = ''
   table.innerHTML = `<tr>
     <th>№</th>
     <th>Имя</th>
@@ -117,6 +118,10 @@ const renderList = () => {
           </tr>
   `;
     table.insertAdjacentHTML("beforeend", html);
+    const option = `
+    <option value="${el.id}">${el.id}</option>
+    `;
+    selectStudent.insertAdjacentHTML("beforeend", option);
   }
   average.innerHTML = getAllAverageScores(students);
 };
@@ -138,9 +143,12 @@ addBtn.addEventListener("click", function () {
 
 // обработчик кнопки "Добавить оценку"
 addScoreBtn.addEventListener("click", function () {
-  if (newScore.value.length > 0 && student.value.length > 0) {
-    addScore(students, student.value, Number(newScore.value));
+  if (newScore.value.length > 0 && newScore.value >= 1 && newScore.value <= 5 ) {
+    addScore(students, selectStudent.value, Number(newScore.value));
     renderList();
+  }
+  else{
+    alert("Оценка от 1 до 5")
   }
 });
 
